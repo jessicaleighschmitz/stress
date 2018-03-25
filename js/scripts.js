@@ -1,42 +1,22 @@
-function StressLevel(array1, array2, array3) {
-  this.array1 = array1;
-  this.array2 = array2;
-  this.array3 = array3;
+function StressLevel(question1, question2, question3) {
+  this.question1 = question1;
+  this.question2 = question2;
+  this.question3 = question3;
 }
 
-var array1 = [];
-var array2 = [];
-var array3 = [];
-var total = 0;
 
-function maths() {
-  debugger;
-  var x = array1.forEach(function() {
-    total += array1;
-  });
+StressLevel.prototype.totalResults = function () {
+  var answer = this.question1 + this.question2 + this.question3;
+  var low = "Not very stressed";
+  var medium = "Kinda stressed, bro";
+  var high = "Wow you really need to chill man. Use your coping skills.";
 
-  var y = array2.forEach(function() {
-    total += array2;
-  });
-
-  var z = array3.forEach(function() {
-    total += array3;
-  });
-  return parseInt(total);
-
-}
-
-function userStressLevel(total){
-  debugger;
-  if (total === 0 || total <= 30){
-    var result1 = "1";
-    return result1;
-  } else if (total >= 31 && total <= 60) {
-    var result2 = "2";
-    return result2;
+  if (answer <= 3) {
+    return low;
+  } else if (answer >=4 && answer <=6) {
+    return medium;
   } else {
-    var result3 = "3";
-    return result3;
+    return high;
   }
 }
 
@@ -45,24 +25,17 @@ $(document).ready(function() {
   $('#form').submit(function(event) {
     event.preventDefault();
 
-    $('input:checkbox[name=question-input-one]:checked').each(function() {
-      var answerQuestionOne = parseInt($(this).val());
-      array1.push(answerQuestionOne);
-    });
-    $('input:checkbox[name=question-input-two]:checked').each(function() {
-      var answerQuestionTwo = parseInt($(this).val());
-      array2.push(answerQuestionTwo);
-    });
-    $('input:checkbox[name=question-input-three]:checked').each(function() {
-      var answerQuestionThree = parseInt($(this).val());
-      array3.push(answerQuestionThree);
-    });
-    var newStressLevel = new StressLevel(array1, array2, array3);
-    console.log(array1, array2, array3);
+    var answerQuestionOne = $('input:checkbox[name=question-input-one]:checked').length;
 
-    maths();
-    var showResult = userStressLevel();
-    $('#result').text(showResult);
-          console.log(total);
+    var answerQuestionTwo = $('input:checkbox[name=question-input-two]:checked').length;
+
+    var answerQuestionThree = $('input:checkbox[name=question-input-three]:checked').length;
+
+    var newStressLevel = new StressLevel(answerQuestionOne, answerQuestionTwo, answerQuestionThree);
+
+    var answer = newStressLevel.totalResults();
+
+    $('#result').text(answer);
+
   });
 });
